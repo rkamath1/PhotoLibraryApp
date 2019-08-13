@@ -9,6 +9,44 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        
+        <!--<GridView Name="Images" Height=" 300" Width="400" Margin="50">
+            <GridView.ItemTemplate>
+                <DataTemplate x:DataType="Image">
+                    <StackPanel Orientation="Vertical" Margin="2">
+                        <Image Source="C:\Users\Ranja\Pictures\2017-08\IMG_4138.JPG"/>
+                    </StackPanel>
+                </DataTemplate>
+            </GridView.ItemTemplate>
+        </GridView>-->
 
+        <VariableSizedWrapGrid Grid.Row="2"
+                       Orientation="Horizontal">
+            <ItemsControl ItemsSource="{Binding }">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <Image Source="{Binding}" />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </VariableSizedWrapGrid>
+
+        <Button 
+                Content="Import Pictures" 
+                HorizontalAlignment="Right" 
+                VerticalAlignment="Top" 
+                Click= "Import_Photos_Button_ClickAsync"/>
+        <Button 
+            Content="Albums" 
+            Background="White"
+            HorizontalAlignment="Left" 
+            VerticalAlignment="Top" Margin="173,20,0,0"  
+            Click="Album_Button_Click" 
+            RenderTransformOrigin="0.701,2.031" />
+        <TextBox HorizontalAlignment="Left" Margin="91,20,0,0" Text="Collection" VerticalAlignment="Top" RenderTransformOrigin="0.573,-4.781"/>
+
+        <StackPanel VerticalAlignment="Center" HorizontalAlignment="Center">
+            <TextBlock x:Name="textBlock" />
+        </StackPanel>
     </Grid>
 </Page>
