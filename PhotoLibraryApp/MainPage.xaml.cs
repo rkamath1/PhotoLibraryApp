@@ -19,6 +19,11 @@ using System.Diagnostics;
 using Windows.Storage.Pickers;
 using Windows.Storage.Provider;
 using System.Collections.ObjectModel;
+using Windows.Storage.Search;
+using Windows.Storage.Streams;
+using Windows.Graphics.Imaging;
+using System.Windows;
+using Windows.UI.Xaml.Media.Imaging;
 
 // The Blank Page item template is documented at https://go.microsoft.com/fwlink/?LinkId=402352&clcid=0x409
 
@@ -29,46 +34,121 @@ namespace PhotoLibraryApp
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        private ObservableCollection<string> current;
+       
         public MainPage()
         {
             this.InitializeComponent();
-            current = new ObservableCollection<string>();
-            current.Add("C://Users/Ranja/Pictures/2017-08/IMG_4138.JPG");
-            current.Add("C://Users/Ranja/Pictures/2017-08/IMG_4139.JPG");
-            current.Add("C://Users/Ranja/Pictures/2017-08/IMG_4140.JPG");
-            this.DataContext = current;
+            
         }
 
-        private async void Import_Photos_Button_ClickAsync(object sender, RoutedEventArgs e)
+        //Method to write image data to blank image file created by the FileSavePicker
+        //Call the OpenAsync method of the StorageFile object to get a random access stream containing the image data
+        private async void SaveSoftwareBitmapToFile(SoftwareBitmap softwareBitmap, StorageFile outputFile)
         {
+            using (IRandomAccessStream stream = await outputFile.OpenAsync(FileAccessMode.ReadWrite))
             {
-                FileOpenPicker openPicker = new FileOpenPicker();
-                openPicker.ViewMode = PickerViewMode.Thumbnail;
-                openPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
-                openPicker.FileTypeFilter.Add(".jpg");
-                openPicker.FileTypeFilter.Add(".jpeg");
-                openPicker.FileTypeFilter.Add(".png");
+                // Create an encoder with the desired format
+                BitmapEncoder encoder = await BitmapEncoder.CreateAsync(BitmapEncoder.JpegEncoderId, stream);
 
-                StorageFile file = await openPicker.PickSingleFileAsync();
+                // Set the software bitmap
+                encoder.SetSoftwareBitmap(softwareBitmap);
 
+                // Set additional encoding parameters, if needed
+                encoder.BitmapTransform.ScaledWidth = 320;
+                encoder.BitmapTransform.ScaledHeight = 240;
+                encoder.BitmapTransform.Rotation = Windows.Graphics.Imaging.BitmapRotation.Clockwise90Degrees;
+                encoder.BitmapTransform.InterpolationMode = BitmapInterpolationMode.Fant;
+                encoder.IsThumbnailGenerated = true;
 
-                if (file != null)
+                try
                 {
-                    // Application now has read/write access to the picked file
-                    this.textBlock.Text = "Picked photo: " + file.Name;
-
+                    await encoder.FlushAsync();
                 }
-                else
+                catch (Exception err)
                 {
-                    this.textBlock.Text = "Operation cancelled.";
+                    const int WINCODEC_ERR_UNSUPPORTEDOPERATION = unchecked((int)0x88982F81);
+                    switch (err.HResult)
+                    {
+                        case WINCODEC_ERR_UNSUPPORTEDOPERATION:
+                            // If the encoder does not support writing a thumbnail, then try again
+                            // but disable thumbnail generation.
+                            encoder.IsThumbnailGenerated = false;
+                            break;
+                        default:
+                            throw;
+                    }
                 }
+
+                if (encoder.IsThumbnailGenerated == false)
+                {
+                    await encoder.FlushAsync();
+                }
+
 
             }
+        }//End of method
 
+        //Define what happens whn the Import Photos button is clicked
+        private async void Import_Photos_Button_ClickAsync(object sender, RoutedEventArgs e)
+        {
+            //Open a file from the picture library
+            FileOpenPicker fileOpenPicker = new FileOpenPicker();
+            fileOpenPicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            fileOpenPicker.ViewMode = PickerViewMode.Thumbnail;
+            fileOpenPicker.FileTypeFilter.Add(".jpg");
+            fileOpenPicker.FileTypeFilter.Add(".jpeg");
+            fileOpenPicker.FileTypeFilter.Add(".png");
 
-        }
+            var inputFile = await fileOpenPicker.PickSingleFileAsync();
 
+            if (inputFile == null)
+            {
+                // The user cancelled the picking operation
+                this.textBlock.Text = "File Open Operation cancelled.";
+                return;
+            }
+            
+            //Display text showing which photo was picked
+            this.textBlock.Text = "Picked photo: " + inputFile.Name;
+
+            //Preparing opened image file for saving
+            SoftwareBitmap softwareBitmap;
+
+            using (IRandomAccessStream stream = await inputFile.OpenAsync(FileAccessMode.Read))
+            {
+                
+                // Create the decoder from the stream
+                BitmapDecoder decoder = await BitmapDecoder.CreateAsync(stream);
+
+                // Get the SoftwareBitmap representation of the file
+                softwareBitmap = await decoder.GetSoftwareBitmapAsync();
+            }
+
+            //Save an image object to picture library. This will be an empty file
+            FileSavePicker fileSavePicker = new FileSavePicker();
+            fileSavePicker.SuggestedStartLocation = PickerLocationId.PicturesLibrary;
+            fileSavePicker.FileTypeChoices.Add("JPEG files", new List<string>() { ".JPG" });
+            fileSavePicker.SuggestedFileName = "image";
+
+            var outputFile = await fileSavePicker.PickSaveFileAsync();
+
+            if (outputFile == null)
+            {
+                // The user cancelled the picking operation
+                this.textBlock.Text = "Save Operation cancelled.";
+                return;
+            }
+            else
+            {
+                //Write the opened file to the empty image file opened by the FileSavePicker
+                SaveSoftwareBitmapToFile(softwareBitmap, outputFile);
+                this.textBlock.Text = "Saved photo: " + outputFile.Name + " to picture library";
+            }
+           
+
+        }//End of button click method
+
+        //Navigate to Albums page
         private void Album_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AlbumPage));
