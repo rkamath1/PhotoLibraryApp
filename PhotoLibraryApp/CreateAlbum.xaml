@@ -1,11 +1,11 @@
 ﻿<Page
-    x:Class="PhotoLibraryApp.AlbumPage"
+    x:Class="PhotoLibraryApp.CreateAlbum"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:local="using:PhotoLibraryApp"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    mc:Ignorable="d" Loaded="Page_Loaded"
+    mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
@@ -21,28 +21,17 @@
                     Background="White"  
                     BorderBrush="Gray" 
                     BorderThickness="1, 1, 1, 0" 
+                    Click="Album_Button_Click"
                     HorizontalAlignment="Left" 
                     Margin="125,11,0,0" 
-                    VerticalAlignment="Top" 
-                    RenderTransformOrigin="0.478,-0.594"/>
-        <Button Content="+ Album" 
-                    Click="Add_Album_Button_ClickAsync" 
-                    BorderBrush="Gray" 
-                    Background="White"
-                    Margin="0,11,40,0" 
-                    HorizontalAlignment="Right" 
                     VerticalAlignment="Top" />
-        
-        <ScrollViewer HorizontalScrollBarVisibility="Auto" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <StackPanel x:Name="stack1" 
-                        ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                        ScrollViewer.HorizontalScrollMode ="Enabled"
-                        Orientation="Horizontal"                         
-                        HorizontalAlignment="Center"
-                        VerticalAlignment="Center"
-                        Margin="100,100,100,100">
+        <StackPanel Orientation="Vertical" Margin="150, 150, 150, 150"  >
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Text="Album Name: " Width="100" Height="50"/>
+                <TextBox Name="albumName" Height="35" Width="300" />
             </StackPanel>
-        </ScrollViewer>
+            <Button Content="+ Add Photos" Click="Button_ClickAsync" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" />
+            <TextBlock Name ="textBlock" Width="100" Height="50"/>
+        </StackPanel>
     </Grid>
-    
 </Page>
