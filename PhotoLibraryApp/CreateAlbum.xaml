@@ -9,22 +9,29 @@
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
 
     <Grid>
+        
+            <CommandBar DefaultLabelPosition="Right" Margin="150,11,10,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="30">
+                <AppBarButton x:Name="CancelSelectionBtn" Label="Cancel" Icon="Cancel" Click="CancelSelectionBtn_Click"/>
+            </CommandBar>
+        
         <Button Content="Collection" 
-                    Background="White" 
-                    BorderBrush="Gray" 
-                    BorderThickness="1, 1, 1, 0" 
-                    Click="Collection_Button_Click"
-                    HorizontalAlignment="Left" 
-                    Margin="46,11,0,0" 
-                    VerticalAlignment="Top" />
+                Background="White" 
+                BorderBrush="Gray" 
+                BorderThickness="0, 1, 1, 0" 
+                HorizontalAlignment="Left" 
+                Margin="1,11,0,0" 
+                VerticalAlignment="Top" 
+                Click="Collection_Button_Click" 
+                Height="30"/>
         <Button Content="Albums" 
-                    Background="White"  
-                    BorderBrush="Gray" 
-                    BorderThickness="1, 1, 1, 0" 
-                    Click="Album_Button_Click"
-                    HorizontalAlignment="Left" 
-                    Margin="125,11,0,0" 
-                    VerticalAlignment="Top" />
+                Background="White" 
+                Click="Album_Button_Click"
+                BorderBrush="Gray" 
+                BorderThickness="1, 1, 1, 0" 
+                HorizontalAlignment="Left" 
+                Margin="80,11,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" />
         <StackPanel Orientation="Vertical" Margin="150, 150, 150, 150"  >
             <StackPanel Orientation="Horizontal">
                 <TextBlock Text="Album Name: " Width="100" Height="50"/>

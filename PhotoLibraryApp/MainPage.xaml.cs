@@ -42,11 +42,6 @@ namespace PhotoLibraryApp
             this.DataContext = Picture.Collection;
         }
 
-        protected override void OnNavigatedTo(NavigationEventArgs e)
-        {
-            base.OnNavigatedTo(e);
-        }
-
         public async void Add_Photos_Button_ClickAsync(object sender, RoutedEventArgs e)
         {
             var picker = new FileOpenPicker();
@@ -69,20 +64,28 @@ namespace PhotoLibraryApp
                 await dialog.ShowAsync();
             }
         }
+             
 
         private void Album_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(AlbumPage));
         }
 
-        private void Collection_Button_Click(object sender, RoutedEventArgs e)
+        private void Delete_Photos_Button_ClickAsync(object sender, RoutedEventArgs e)
         {
-            //To do: add button click function            
+            this.Frame.Navigate(typeof(DeletePhoto));
         }
+
+        private void SelectPhotosButton_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(SelectPhotos));
+        }       
 
         private void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
             this.Frame.Navigate(typeof(PhotoViewPage));
         }
+
+       
     }
 }

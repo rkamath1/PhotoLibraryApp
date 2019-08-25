@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -9,6 +10,7 @@ using Windows.Foundation.Collections;
 using Windows.Storage;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
@@ -122,6 +124,10 @@ namespace PhotoLibraryApp
             this.Frame.Navigate(typeof(CreateAlbum));
         }
 
+        private void CancelSelectionBtn_Click(object sender, RoutedEventArgs e)
+        {
+            this.Frame.Navigate(typeof(MainPage));
+        }
 
         private void Collection_Button_Click(object sender, RoutedEventArgs e)
         {
@@ -132,5 +138,20 @@ namespace PhotoLibraryApp
         {
             await LoadPicturesFromAlbums();
         }
+
+        private async void DeleteAlbumBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Create message dialog and set contents
+            var confirmation = new MessageDialog("Delete Albums functionality has not been implemented yet");                    
+            await confirmation.ShowAsync();
+        }
+
+        private async void SelectAlbumBtn_Click(object sender, RoutedEventArgs e)
+        {
+            //Create message dialog and set contents
+            var confirmation = new MessageDialog("Select Albums functionality has not been implemented yet");
+            await confirmation.ShowAsync();
+        }
     }
+    
 }

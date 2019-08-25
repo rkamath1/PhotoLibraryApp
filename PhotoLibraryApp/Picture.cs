@@ -11,6 +11,7 @@ using Windows.Storage.Streams;
 using Windows.Storage.FileProperties;
 using Windows.Storage.Search;
 using Windows.UI.Popups;
+using System.Diagnostics;
 
 namespace PhotoLibraryApp
 {
@@ -48,7 +49,7 @@ namespace PhotoLibraryApp
                 else
                 {
                     // show mwssage to the user
-                    var dialog = new MessageDialog($"The file '{storageFile.Path}' already exists in the collection.");
+                    var dialog = new MessageDialog($"The photo '{storageFile.Name}' already exists in the collection.");
                     await dialog.ShowAsync();
                 }
             }
@@ -127,6 +128,39 @@ namespace PhotoLibraryApp
 
             // Add Picture object to the global observable collection
             Collection.Add(pic);
+        }
+
+        //Delete Photos Method: 
+        public static async Task DeletePhotoFromCollection(string photoPath)
+        {
+            string currFile = ApplicationData.Current.LocalFolder.Path + "\\" + TEXT_FILE_NAME;
+            string tempFile = currFile + ".temp";
+            Debug.WriteLine(currFile);
+            Debug.WriteLine(tempFile);
+            using (var sr = new FileStream(currFile, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = new StreamReader(sr))
+                {
+                    using (var sw = new FileStream(tempFile, FileMode.OpenOrCreate, FileAccess.Write))
+                    {
+                        using (var writer = new StreamWriter(sw))
+                        {
+                            string line;
+
+                            while ((line = reader.ReadLine()) != null)
+                            {
+                                if (line != photoPath)
+                                    writer.WriteLine(line);
+                            }
+                        }
+                       
+                    }
+                    
+                }
+               
+            }
+            File.Delete(currFile);
+            File.Move(tempFile, currFile);
         }
 
     }

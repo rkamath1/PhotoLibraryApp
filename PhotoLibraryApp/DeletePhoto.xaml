@@ -1,0 +1,65 @@
+﻿<Page
+    x:Class="PhotoLibraryApp.DeletePhoto"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:PhotoLibraryApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
+
+    <Grid>
+        
+            <CommandBar DefaultLabelPosition="Right" Margin="150,11,10,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="29">
+                <AppBarButton x:Name="DeleteItemBtn" Label="Delete" Icon="Delete" Click="Delete_Button_ClickAsync"/>
+                <AppBarButton x:Name="CancelSelectionBtn" Label="Cancel" Icon="Cancel" Click="Cancel_Button_ClickAsync"/>
+            </CommandBar>
+        
+        <Button Content="Collection" 
+                Background="White" 
+                BorderBrush="Gray" 
+                BorderThickness="0, 1, 1, 0" 
+                HorizontalAlignment="Left" 
+                Margin="1,11,0,0" 
+                VerticalAlignment="Top" 
+                Click="Collection_Button_Click"
+                Height="30"/>
+        <Button Content="Albums" 
+                Background="White" 
+                Click="Album_Button_Click" 
+                BorderBrush="Gray" 
+                BorderThickness="1, 1, 1, 0" 
+                HorizontalAlignment="Left" 
+                Margin="80,11,0,0" 
+                VerticalAlignment="Top" 
+                Height="30" />
+
+        <ScrollViewer VerticalScrollBarVisibility="Visible" 
+                      VerticalScrollMode="Enabled" 
+                      HorizontalScrollBarVisibility="Visible" 
+                      HorizontalScrollMode="Enabled"
+                      Margin="0,50,0,0" >
+            <StackPanel Orientation="Vertical">
+                <GridView SelectionMode="Multiple" 
+                          Name="DeleteGrid" 
+                          ItemsSource="{Binding}"  
+                          SelectedItem="{Binding Path}"
+                          Width="1350"
+                          ScrollViewer.VerticalScrollBarVisibility="Auto" 
+                          Margin="50,50,0,0" 
+                          Grid.ColumnSpan="4">
+                    <GridView.ItemTemplate>
+                        <DataTemplate x:Name="ImageGalleryDataTemplate" x:DataType="local:Picture">
+                            <Image Width="140" Height="140" Source="{x:Bind ImageSource}" Stretch="UniformToFill"/>
+                        </DataTemplate>
+                    </GridView.ItemTemplate>
+                    <GridView.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <ItemsWrapGrid Orientation="Horizontal"/>
+                        </ItemsPanelTemplate>
+                    </GridView.ItemsPanel>
+                </GridView>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</Page>
