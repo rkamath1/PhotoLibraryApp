@@ -56,7 +56,7 @@ namespace PhotoLibraryApp
             }
 
             // Create a bitmap
-            var bitmapImage = new Windows.UI.Xaml.Media.Imaging.BitmapImage();
+            var bitmapImage = new BitmapImage();
             using (var stream = await storageFile.OpenAsync(FileAccessMode.Read))
             {
                 bitmapImage.SetSource(stream);

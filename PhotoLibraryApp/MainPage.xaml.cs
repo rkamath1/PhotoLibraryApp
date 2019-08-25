@@ -83,7 +83,10 @@ namespace PhotoLibraryApp
 
         private void ItemView_ItemClick(object sender, ItemClickEventArgs e)
         {
-            this.Frame.Navigate(typeof(PhotoViewPage));
+            GridView gv = sender as GridView;
+            int index = gv.Items.IndexOf((e.ClickedItem));
+            this.Frame.Navigate(typeof(PhotoViewPage), index);
+           
         }
 
        

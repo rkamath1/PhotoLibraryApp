@@ -13,10 +13,10 @@
             <StackPanel Orientation="Horizontal">
                 <Button Content="Back" Click="Back_Button_Click"/>
             </StackPanel>
-            <FlipView x:Name="flipView" ItemsSource="{x:Bind Items}">
+            <FlipView x:Name="flipView" ItemsSource="{x:Bind Items}" Background="White" >
                 <FlipView.ItemTemplate>
                     <DataTemplate x:DataType="local:Picture">
-                        <Image Width="800" Height="450" Source="{x:Bind ImageSource}"/>
+                        <Image Source="{x:Bind ImageSource}" ToolTipService.ToolTip="{x:Bind ImageName}"/>
                     </DataTemplate>
                 </FlipView.ItemTemplate>
             </FlipView>

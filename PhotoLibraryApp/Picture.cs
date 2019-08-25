@@ -26,6 +26,9 @@ namespace PhotoLibraryApp
         // Path of the picture file
         public string Path { get; set; }
 
+        // Title of the picture file
+        public string ImageName { get; set; }
+
         // BitmapImage to be used as the souce of the image control
         public BitmapImage ImageSource { get; set; }
 
@@ -75,10 +78,12 @@ namespace PhotoLibraryApp
                 bitmapImage.SetSource(stream);
             }
 
-            // Create Picture object
-            var pic = new Picture();           
-            pic.Path = storageFile.Path;
-            pic.ImageSource = bitmapImage;
+            var pic = new Picture
+            {
+                Path = storageFile.Path,
+                ImageSource = bitmapImage,
+                ImageName = storageFile.Name
+            };
 
             // Add Picture object to the global observable collection
             Collection.Add(pic);
@@ -109,11 +114,13 @@ namespace PhotoLibraryApp
             StorageFile storageFile = await StorageFile.GetFileFromPathAsync(filePath);           
             BitmapImage bitmapImage = new BitmapImage();
 
+            //Below code uses more memory
             //using (var stream = await storageFile.OpenAsync(FileAccessMode.Read))
             //{
             //    bitmapImage.SetSource(stream);
             //}
 
+            //This one uses less memory
             using (StorageItemThumbnail thumbNail = await storageFile.GetThumbnailAsync(ThumbnailMode.SingleItem))
             {
                 bitmapImage.SetSource(thumbNail);
@@ -123,7 +130,8 @@ namespace PhotoLibraryApp
             var pic = new Picture
             {
                 Path = storageFile.Path,
-                ImageSource = bitmapImage
+                ImageSource = bitmapImage,
+                ImageName = storageFile.Name
             };
 
             // Add Picture object to the global observable collection

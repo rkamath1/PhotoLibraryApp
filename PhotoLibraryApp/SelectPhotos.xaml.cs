@@ -62,16 +62,22 @@ namespace PhotoLibraryApp
 
         }
 
-        private void CommandInvokedHandler(IUICommand command)
+        private async void CommandInvokedHandler(IUICommand command)
         {
+            string text = this.SelectGrid.SelectedItems.Count.ToString() + " photos were deleted";
+
+
             foreach (Picture p in this.SelectGrid.SelectedItems)
             {
                 Debug.WriteLine(p.Path);
-                Picture.DeletePhotoFromCollection(p.Path);
+                await Picture.DeletePhotoFromCollection(p.Path);
             }
             Picture.Collection.Clear();
-            Picture.LoadAllPicturesAsync();
+            await Picture.LoadAllPicturesAsync();
             this.Frame.Navigate(typeof(MainPage));
+
+            var confirmation = new MessageDialog(text);
+            await confirmation.ShowAsync();
         }
 
         private void CancelSelectionBtn_Click(object sender, RoutedEventArgs e)

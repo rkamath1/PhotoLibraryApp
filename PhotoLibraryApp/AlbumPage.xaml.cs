@@ -74,6 +74,7 @@ namespace PhotoLibraryApp
             {
                 Width = 150,
                 Height = 150,
+                Background = new SolidColorBrush(),
                 BorderThickness = new Thickness(4)                
             };
 
@@ -108,6 +109,7 @@ namespace PhotoLibraryApp
                         bitmapImage.SetSource(thumb);
                     }
                     image.Source = bitmapImage;
+                    image.Stretch = new Stretch();
                     flipView1.Items.Add(image);
                 }
             }

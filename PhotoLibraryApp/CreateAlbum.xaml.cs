@@ -58,6 +58,7 @@ namespace PhotoLibraryApp
                 {
                     //Add pictures to album file
                     await AlbumHelper.AddPictures(files, textFile);
+                    
                 }
 
                 catch (Exception ex)

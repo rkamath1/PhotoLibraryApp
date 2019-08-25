@@ -23,20 +23,23 @@ namespace PhotoLibraryApp
     /// </summary>
     public sealed partial class PhotoViewPage : Page
     {
-        public string TextContent { get; set; }
-
         // Items for the flip view
-        public Collection<Picture> Items { get; set; } // = Picture.Collection;
+        public ObservableCollection<Picture> Items { get; set; } // = Picture.Collection;
 
         public PhotoViewPage()
         {
-            this.InitializeComponent();
-            this.Items = Picture.Collection;
+            this.InitializeComponent();           
         }
 
         private void Back_Button_Click(object sender, RoutedEventArgs e)
         {
             this.Frame.Navigate(typeof(MainPage));
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            this.Items = Picture.Collection;
+            flipView.SelectedIndex = Convert.ToInt32(e.Parameter);
         }
     }
 }

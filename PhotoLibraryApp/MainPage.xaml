@@ -57,7 +57,7 @@
                           ItemClick="ItemView_ItemClick">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="local:Picture">
-                            <Image Width="140" Height="140" Source="{x:Bind ImageSource}" Stretch="UniformToFill" />
+                            <Image Width="140" Height="140" Source="{x:Bind ImageSource}" Stretch="UniformToFill" ToolTipService.ToolTip="{x:Bind ImageName}"/>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>

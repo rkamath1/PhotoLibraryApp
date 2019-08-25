@@ -64,6 +64,8 @@ namespace PhotoLibraryApp
 
         public async void CommandInvokedHandlerDelete(IUICommand command)
         {
+            string text = this.DeleteGrid.SelectedItems.Count.ToString() + " photos were deleted";
+
             foreach (Picture p in this.DeleteGrid.SelectedItems)
             {
                 Debug.WriteLine(p.Path);
@@ -73,11 +75,17 @@ namespace PhotoLibraryApp
             await Picture.LoadAllPicturesAsync();
             this.Frame.Navigate(typeof(MainPage));
 
+            var confirmation = new MessageDialog(text);
+            await confirmation.ShowAsync();
         }
 
-        public void CommandInvokedHandlerCancel(IUICommand command)
+        public async void CommandInvokedHandlerCancel(IUICommand command)
         {
             Debug.WriteLine(command.Label);
+            this.Frame.Navigate(typeof(MainPage));
+
+            var dialog = new MessageDialog("No photos were deleted");
+            await dialog.ShowAsync();
         }
 
         private void Album_Button_Click(object sender, RoutedEventArgs e)
