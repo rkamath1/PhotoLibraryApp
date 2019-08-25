@@ -62,15 +62,15 @@ namespace PhotoLibraryApp
             }
         }
 
-        public void CommandInvokedHandlerDelete(IUICommand command)
+        public async void CommandInvokedHandlerDelete(IUICommand command)
         {
             foreach (Picture p in this.DeleteGrid.SelectedItems)
             {
                 Debug.WriteLine(p.Path);
-                Picture.DeletePhotoFromCollection(p.Path);
+                await Picture.DeletePhotoFromCollection(p.Path);
             }
             Picture.Collection.Clear();
-            Picture.LoadAllPicturesAsync();
+            await Picture.LoadAllPicturesAsync();
             this.Frame.Navigate(typeof(MainPage));
 
         }
