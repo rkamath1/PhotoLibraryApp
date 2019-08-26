@@ -37,8 +37,11 @@
                 <TextBlock Text="Album Name: " Width="100" Height="50"/>
                 <TextBox Name="albumName" Height="35" Width="300" />
             </StackPanel>
-            <Button Content="+ Add Photos" Click="Button_ClickAsync" HorizontalAlignment="Left" Margin="0,0,0,0" VerticalAlignment="Top" />
-            <TextBlock Name ="textBlock" Width="100" Height="50"/>
+            <Button Content="+ Add Photos" 
+                    Click="Button_ClickAsync" 
+                    HorizontalAlignment="Left" 
+                    Margin="0,0,0,0" 
+                    VerticalAlignment="Top" />
         </StackPanel>
     </Grid>
 </Page>

@@ -47,8 +47,11 @@
                           Margin="50,50,0,0" 
                           Grid.ColumnSpan="4">
                     <GridView.ItemTemplate>
-                        <DataTemplate x:Name="ImageGalleryDataTemplate" x:DataType="local:Picture">
-                            <Image Width="140" Height="140" Source="{x:Bind ImageSource}" Stretch="UniformToFill"/>
+                        <DataTemplate x:DataType="local:Picture">
+                            <Image Width="140" 
+                                   Height="140" 
+                                   Source="{x:Bind ImageSource}" 
+                                   Stretch="UniformToFill"/>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                     <GridView.ItemsPanel>

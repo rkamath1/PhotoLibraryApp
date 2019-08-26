@@ -8,19 +8,13 @@
     mc:Ignorable="d"
     Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
     <Grid>
-       
-            <CommandBar DefaultLabelPosition="Right" Margin="150,11,10,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="30">
-                
-                <AppBarButton x:Name="SelectPhotosButton" FontFamily="OverflowCheckGlyph" Label="Select Photos" Click="SelectPhotosButton_Click">
-                    <AppBarButton.Icon>
-                        <FontIcon FontFamily="Segoe MDL2 Assets" Glyph="&#xe762;" />
-                    </AppBarButton.Icon>
-                </AppBarButton>
 
-                <AppBarButton x:Name="AddItemBtn" Label="Add Photos" Icon="Add" Click="Add_Photos_Button_ClickAsync" HorizontalAlignment="Center" Margin="0,0,0,0" VerticalAlignment="Top"/>
-                <AppBarButton x:Name="DeleteItemBtn" Label="Delete Photos" Icon="Delete" Click="Delete_Photos_Button_ClickAsync" HorizontalAlignment="Center"  VerticalAlignment="Top"/>
-                <AppBarButton x:Name="CancelSelectionBtn" Label="Cancel" Icon="Cancel"  HorizontalAlignment="Center"  VerticalAlignment="Top"/>
-            </CommandBar>
+        <CommandBar DefaultLabelPosition="Right" Margin="150,11,10,0" VerticalAlignment="Top" HorizontalAlignment="Stretch" Height="30">
+            <AppBarButton x:Name="SelectPhotosButton" Label="Select Photos" Click="SelectPhotosButton_Click"/>
+            <AppBarButton x:Name="AddItemBtn" Label="Add Photos" Icon="Add" Click="Add_Photos_Button_ClickAsync" />
+            <AppBarButton x:Name="DeleteItemBtn" Label="Delete Photos" Icon="Delete" Click="Delete_Photos_Button_ClickAsync" />
+            <AppBarButton x:Name="CancelSelectionBtn" Label="Cancel" Icon="Cancel" />
+        </CommandBar>
         
         <Button Content="Collection" 
                 Background="White" 
@@ -45,7 +39,7 @@
                       HorizontalScrollBarVisibility="Visible" 
                       HorizontalScrollMode="Enabled"
                       Margin="0,50,0,0" >
-            <!--<Grid HorizontalAlignment="Stretch" Margin="0,0,0,0" VerticalAlignment="Stretch">-->
+            
             <StackPanel Orientation="Vertical" >
                 <GridView Name="CollectionGrid" 
                           ItemsSource="{Binding}" 
@@ -57,12 +51,16 @@
                           ItemClick="ItemView_ItemClick">
                     <GridView.ItemTemplate>
                         <DataTemplate x:DataType="local:Picture">
-                            <Image Width="140" Height="140" Source="{x:Bind ImageSource}" Stretch="UniformToFill" ToolTipService.ToolTip="{x:Bind ImageName}"/>
+                            <Image Width="140" 
+                                   Height="140" 
+                                   Source="{x:Bind ImageSource}" 
+                                   Stretch="UniformToFill" 
+                                   ToolTipService.ToolTip="{x:Bind ImageName}"/>
                         </DataTemplate>
                     </GridView.ItemTemplate>
                 </GridView>
             </StackPanel>
-            <!--</Grid>-->
+            
         </ScrollViewer>
     </Grid>
 </Page>
